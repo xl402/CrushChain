@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>CrushChain</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body>
+
+    <div class = "generalHolder">
+      <h1 class="page-header"><h1>CrushChain <img src="https://i.imgur.com/51tGMGh.png"width="60" height="55"> </h1>
+      <hr>
+    </div>
+
+
+<div class = "formHolder">
+  <div class="form-group">
+    <label>Message to your crush:</label>
+    <textarea type="text" class="form-control" placeholder="Got something to spill?" rows="3"></textarea>
+  </div>
+  <button class = "btn btn-primary" onclick="App.createPost(); return false;">Post</button>
+  <hr>
+</div>
+
+
+<div class="tweetEntry-tweetHolder">
+  <template id="post-template">
+    <div class="tweetEntry">
+      <div class="tweetEntry-content">
+        <a class="tweetEntry-account-group" href="[accountURL]">
+          <img class="tweetEntry-avatar" src="http://placekitten.com/150/150" id="catImg">
+          <span class="tweetEntry-timestamp">[timestamp]</span>
+        </a>
+        <div class="tweetEntry-text-container">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quam ipsum, finibus ac est sed, vestibulum condimentum neque. Sed eget iaculis.
+        </div>
+      </div>
+      <div class="tweetEntry-action-list" style="line-height:24px;color: #b1bbc3;">
+        <i class="fa fa-reply" style="width: 80px;"></i>
+        <i class="fa fa-heart" style="width: 80px">
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </i>
+        <i class="fa fa-flag" style="width: 80px"></i></i>
+      </div>
+  </template>
+<!--End of tweetHolder-->
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/app.js"></script>
+  </body>
+
+</html>

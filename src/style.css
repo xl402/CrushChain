@@ -1,0 +1,123 @@
+#header {
+  background-color: #66CCFF;
+  color: white;
+}
+
+
+body {
+  font-family: Arial,sans-serif;
+  color: #292f33;
+}
+
+/* This element would be replaced by where you want the templates. */
+.tweetEntry-tweetHolder {
+  border-left: 1px solid #e1e8ed;
+  border-right: 1px solid #e1e8ed;
+  border-top: 1px solid #e1e8ed;
+  width: 688px;
+  margin: auto;
+  border-radius: 5px;
+}
+
+.generalHolder {
+  border-left: 0px solid #e1e8ed;
+  border-right: 0px solid #e1e8ed;
+  border-top: 0px solid #e1e8ed;
+  width: 688px;
+  margin: auto;
+}
+
+.formHolder {
+  border-left: 0px solid #e1e8ed;
+  border-right: 0px solid #e1e8ed;
+  border-top: 0px solid #e1e8ed;
+  width: 688px;
+  margin: auto;
+  border-radius: 5px;
+}
+
+/* The action list is optional. */
+.tweetEntry-action-list {
+  display: block;
+  line-height: 18px;
+  margin-left: 58px;
+  margin-top: 10px;
+  color: #292f33;
+}
+.fa-reply:hover {
+  color: #292f33;
+}
+.fa-flag:hover {
+  color: #292f33;
+}
+.fa-heart:hover {
+  color: #ff3333;
+}
+/************************/
+.fa-heart:hover .dropdown-content {display: block;}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  z-index: 1;
+}
+
+.tweetEntry {
+  border-bottom: 1px solid #e1e8ed;
+  cursor: pointer;
+  min-height: 51px;
+  padding: 9px 12px;
+}
+.tweetEntry-content {
+  display: block;
+  font-size: 14px;
+  margin-left: 58px;
+  font-size: 14px;
+}
+.tweetEntry-account-group {
+  color: #8899a6;
+  padding: 0px;
+  text-decoration: none;
+  line-height: 20px;
+}
+.tweetEntry-avatar {
+  float: left;
+  height: 48px;
+  width: 48px;
+  margin-left: -58px;
+  border-radius: 5px;
+}
+.tweetEntry-fullname {
+  font-weight: bold;
+  font-size: 14px;
+  color: #292f33;
+  padding: 0px;
+}
+.tweetEntry-username {
+  font-weight: bold;
+  font-size: 14px;
+  color: #b1bbc3;
+  padding: 0px;
+}
+.tweetEntry-timestamp {
+  font-size: 14px;
+  color: #b1bbc3;
+  padding: 0px;
+}
+.tweetEntry-text-container {
+  font-size: 14px;
+  color: #292f33;
+  line-height: 18px;
+}
+
+.optionalMedia {
+  margin-left: 58px;
+  margin-top: 10px;
+}
+.optionalMedia-img {
+  border-radius: 5px;
+  max-width: 506px;
+  max-height: 506px;
+
+}
