@@ -1,6 +1,6 @@
 # CrushChain
-### Created by *Team PemCrush*
-#### Participants: *Tom Lu, Ellen Skipper, Rory Xiao, Adian Liusie, Emma Andrews*
+### Created by *Team CrushChain*
+#### Participants: *Ellen Skipper, Emma Andrews, Rory Xiao, Adian Liusie, Tom Lu*
 ## Project Overview:
 * Make **immutable and anonymous** posts to your crushes and be **awarded** by the community.
 * Reward posts which you want to find out **owner's identity**, the owner can claim the reward and **reveal** himself.
