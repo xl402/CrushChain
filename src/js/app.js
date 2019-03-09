@@ -94,7 +94,7 @@ App = {
   changeSort: async() => {
     document.getElementById("no-posts").style.display="none";
     App.sortByRecent = !App.sortByRecent;
-    const container = document.getElementById("post-container"); 
+    const container = document.getElementById("post-container");
     const posts = document.getElementsByClassName("tweetEntry");
 
     const length = posts.length;
@@ -104,7 +104,6 @@ App = {
       const order = posts[i].getAttribute("data-order");
       // convert this to a number
       const award = Number(posts[i].getAttribute("data-award"))/crush;
-      console.log(award)
       //sortMe.push([order, posts[i]])
       //console.log(sortMe)
       sortMe.push(App.sortByRecent ? [award, posts[i]]:[order, posts[i]]);
