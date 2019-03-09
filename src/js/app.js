@@ -55,6 +55,7 @@ App = {
   loadAccount: async() => {
     // Retreive the account
     App.account = web3.eth.accounts[0]
+    console.log(App.account)
   },
 
   loadContract: async() => {
@@ -68,6 +69,7 @@ App = {
 
   createPost: async() => {
     const content = document.querySelector(".form-group textarea");
+    console.log(content)
     const post_message = content.value;
     // Get post message
     if (post_message != "") {
@@ -82,12 +84,11 @@ App = {
       const post = await App.CrushChain.posts(i)
       const postId = post[0].toNumber()
       const content = post[1]
-      const owner = post[2]
-      const timestamp = post[3].toNumber()
-      const award = post[4]
-      const claimed = post[5]
-      const flags = post[6]
-      const likes = post[7]
+      const timestamp = post[2].toNumber()
+      const award = post[3]
+      const claimed = post[4]
+      const flags = post[5]
+      const likes = post[6]
 
       var temp = document.getElementById("post-template");
       postbox = temp.content.cloneNode(true);
@@ -95,7 +96,6 @@ App = {
       item.textContent = content;
       // Also fill its timestamp
       item = postbox.querySelector(".tweetEntry-timestamp");
-      console.log(timestamp);
       item.textContent = timestampToString(timestamp);
 
 
