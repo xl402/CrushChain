@@ -12,30 +12,37 @@
   </head>
 
   <body>
-
+  <div style="margin: 0 auto; width: 688px">
     <div class = "generalHolder">
       <h1 class="page-header"><h1>CrushChain <img src="https://i.imgur.com/51tGMGh.png"width="60" height="55"> </h1>
+      <h3 id="welcome-message">Welcome!</h3>
       <hr>
     </div>
 
 
 <div class = "formHolder">
   <div class="form-group">
-    <label>Message to your crush:</label>
+    <!-- <label>Message to your crush:</label> -->
     <textarea type="text" class="form-control" placeholder="Got something to spill?" rows="3"></textarea>
   </div>
-  <button class = "btn btn-primary" onclick="App.createPost(); return false;">Post</button>
-  <hr>
+  <button class = "post-button" onclick="App.createPost(); return false;">Post</button>
 </div>
 
+<div>
+  <button onclick=App.showMyPosts()>My Posts</button>
+  <button style="width: 155px" id="sortButton" onclick=App.changeSort()>Most Recent Posts</button>
+  <input type="text" name="postSearch" placeholder="Search all posts"></input>
+</div> 
 
-<div class="tweetEntry-tweetHolder">
+<div id="post-container" class="tweetEntry-tweetHolder">
+  <span style="display:none" id="no-posts">You don't have any posts!</span>
   <template id="post-template">
-    <div class="tweetEntry">
+    <div class="tweetEntry" data-order="" data-award="">
       <div class="tweetEntry-content">
         <a class="tweetEntry-account-group" href="[accountURL]">
           <img class="tweetEntry-avatar" src="http://placekitten.com/150/150" id="catImg">
           <span class="tweetEntry-timestamp">[timestamp]</span>
+          <span class="tweetEntry-reward">[reward]</span>
         </a>
         <div class="tweetEntry-text-container">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quam ipsum, finibus ac est sed, vestibulum condimentum neque. Sed eget iaculis.
@@ -45,16 +52,21 @@
         <i class="fa fa-reply" style="width: 80px;"></i>
         <i class="fa fa-heart" style="width: 80px">
           <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+            <a href="#" class="need-id1" data-id="" onclick="App.addReward(1, this)">Reward 1 ETH</a>
+            <a href="#" class="need-id2" data-id="" onclick="App.addReward(3, this)">Reward 3 ETH</a>
+            <a href="#" class="need-id3" data-id="" onclick="App.addReward(5, this)">Reward 5 ETH</a>
           </div>
         </i>
         <i class="fa fa-flag" style="width: 80px"></i></i>
       </div>
+    </div>
   </template>
 <!--End of tweetHolder-->
 </div>
+</div>
+
+<div class="prefooter"></div>
+<div class="footer"></div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

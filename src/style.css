@@ -9,13 +9,27 @@ body {
   color: #292f33;
 }
 
+button {
+  background-color: #e1e8ed;
+  border: 1px solid #e1e8ed;
+  border-radius: 0.5rem;
+}
+
+button:hover {
+  background-color: #fbd8ff;
+  border: 1px solid #fbd8ff;
+}
+button:focus {
+  outline: 0;
+}
+
 /* This element would be replaced by where you want the templates. */
 .tweetEntry-tweetHolder {
   border-left: 1px solid #e1e8ed;
   border-right: 1px solid #e1e8ed;
   border-top: 1px solid #e1e8ed;
   width: 688px;
-  margin: auto;
+  margin: 10px 0px auto;
   border-radius: 5px;
 }
 
@@ -27,13 +41,67 @@ body {
   margin: auto;
 }
 
-.formHolder {
+/* .formHolder {
   border-left: 0px solid #e1e8ed;
   border-right: 0px solid #e1e8ed;
   border-top: 0px solid #e1e8ed;
   width: 688px;
   margin: auto;
   border-radius: 5px;
+} */
+
+.formHolder {
+  width: 688px;
+  margin: 50px auto;
+  border: 4px solid #fbd8ff;
+  padding: 5px;
+  text-align: center;
+  position: relative;
+  border-radius: 1rem;
+  background-color: #fbd8ff;
+}
+
+.formHolder:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid #fbd8ff;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #fbd8ff;
+  border-bottom: 10px solid transparent;
+  left: 20px;
+  bottom: -23px;
+
+}
+
+/* .formHolder:after {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 7px solid #fff;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #fff;
+  border-bottom: 7px solid transparent;
+  left: 24px;
+  bottom: -13px;
+} */
+
+.form-control {
+  margin: 0 auto;
+}
+
+.post-button {
+  background-color: #e1e8ed;
+  border: 0.5px solid #e1e8ed;
+  border-radius: 0.5rem;
+}
+
+.post-button:hover {
+  background-color: grey;
+  border: 1px solid grey;
+  border-radius: 0.5rem;
 }
 
 /* The action list is optional. */
@@ -120,4 +188,13 @@ body {
   max-width: 506px;
   max-height: 506px;
 
+}
+.prefooter {
+  background-color: #fbd8ff;
+  height: 30px;
+  margin-top: 20px;
+}
+.footer {
+  background-color: #CE9AD3;
+  height: 70px;
 }

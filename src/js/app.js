@@ -4,10 +4,12 @@ const myPost = document.querySelector('.formHolder');
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
+const crush = 1000000000000000000;
 
 App = {
   loading: false,
   contracts: {},
+  sortByRecent: false,
   load: async () => {
     // Load app
     console.log("app loading...")
@@ -55,7 +57,9 @@ App = {
   loadAccount: async() => {
     // Retreive the account
     App.account = web3.eth.accounts[0]
-    console.log(App.account)
+    let welcomeItem = document.getElementById("welcome-message");
+    let welcomeString='Welcome, '+App.account+'!';
+    welcomeItem.textContent=(welcomeString);
   },
 
   loadContract: async() => {
@@ -69,7 +73,6 @@ App = {
 
   createPost: async() => {
     const content = document.querySelector(".form-group textarea");
-    console.log(content)
     const post_message = content.value;
     // Get post message
     if (post_message != "") {
@@ -78,9 +81,68 @@ App = {
     }
   },
 
+  addReward: async(value, button) => {
+    const postId=button.getAttribute("data-id");
+    const award = await App.CrushChain.awardPost(postId, {
+      from: App.account,
+      value: crush*value,
+      gas: 500000
+    });
+    location.reload();
+  },
+
+  changeSort: async() => {
+    document.getElementById("no-posts").style.display="none";
+    App.sortByRecent = !App.sortByRecent;
+    const container = document.getElementById("post-container"); 
+    const posts = document.getElementsByClassName("tweetEntry");
+
+    const length = posts.length;
+    const sortMe = [];
+    for (i=0; i<length; i++) {
+      posts[i].style.display = "block";
+      const order = posts[i].getAttribute("data-order");
+      // convert this to a number
+      const award = Number(posts[i].getAttribute("data-award"))/crush;
+      console.log(award)
+      //sortMe.push([order, posts[i]])
+      //console.log(sortMe)
+      sortMe.push(App.sortByRecent ? [award, posts[i]]:[order, posts[i]]);
+    }
+    sortMe.sort(function(x, y) {
+      return x[0] - y[0];
+    });
+    console.log(sortMe.length)
+    for (var i=sortMe.length-1; i >= 0; i--) {
+       container.appendChild(sortMe[i][1]);
+    }
+    document.getElementById("sortButton").textContent = App.sortByRecent ? 'Most Rewarded Posts' : 'Most Recent Posts';
+  },
+
+  showMyPosts: async() => {
+    const posts = document.getElementsByClassName("tweetEntry");
+    const length = posts.length;
+    let postCount = 0;
+    for (i=0; i<length; i++) {
+     const postOwner = posts[i].getAttribute("data-owner");
+     if (postOwner !=="MY POST OWNING ID") {
+     posts[i].style.display = "none";
+     postCount++;
+    }
+  }
+  if (postCount == length) {
+    document.getElementById("no-posts").style.display="inline-block";
+  }
+  },
+
   renderPosts: async() => {
-    const postCount = await App.CrushChain.postsCount()
-    for (var i = 0; i <= postCount-1; i++) {
+    const wallet2post_ids = await App.CrushChain.myPosts()
+    // console.log(wallet2post_ids);
+    // for (var i=0; i<= wallet2post_ids.length -1; i++) {
+    //   console.log(wallet2post_ids[i].toNumber())
+    // }
+      const postCount = await App.CrushChain.postsCount()
+    for (var i = postCount-1; i >= 0; i--) {
       const post = await App.CrushChain.posts(i)
       const postId = post[0].toNumber()
       const content = post[1]
@@ -92,12 +154,34 @@ App = {
 
       var temp = document.getElementById("post-template");
       postbox = temp.content.cloneNode(true);
+
+      // Assign post ID for adding rewards
+      item = postbox.querySelector(".need-id1");
+      item.setAttribute("data-id", postId);
+      item = postbox.querySelector(".need-id2");
+      item.setAttribute("data-id", postId);
+      item = postbox.querySelector(".need-id3");
+      item.setAttribute("data-id", postId);
+
+      // Fill in text of post
       item = postbox.querySelector(".tweetEntry-text-container");
       item.textContent = content;
+
+      // Assign chronological order
+      item = postbox.querySelector(".tweetEntry");
+      item.setAttribute("data-order", i);
+
+      // Assign award amount
+      item = postbox.querySelector(".tweetEntry");
+      item.setAttribute("data-award", award.toNumber());
+
       // Also fill its timestamp
       item = postbox.querySelector(".tweetEntry-timestamp");
       item.textContent = timestampToString(timestamp);
 
+      // Display current reward amount
+      item = postbox.querySelector(".tweetEntry-reward");
+      item.textContent = award/crush+" ETH";
 
       // Fill avatar with some random cat image for lols
       item = postbox.getElementById("catImg");

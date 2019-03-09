@@ -2,7 +2,9 @@ pragma solidity ^0.5.0;
 
 contract CrushChain {
 
-  uint constant crushes = 2 finney; // around 25p per reward base
+  address owner;
+
+  uint constant public crush = 1 ether; // around 25p per reward base
 
   struct Post {
     uint id; // Reference posts with their IDs
@@ -24,6 +26,7 @@ contract CrushChain {
 
   // Securely store which address belong to which post
   mapping(uint => address) private post2wallet;
+  mapping(address => uint[]) private wallet2post_ids;
 
   // Awards pool contains a dictionary of a list, each post with an award
   // maps its id to an IOU list which contains the awarder address and the award
@@ -43,14 +46,27 @@ contract CrushChain {
   function addPost (string memory _content) public {
     posts[postsCount] = Post(postsCount, _content , now, 0, false, 0);
     post2wallet[postsCount] = msg.sender;
+    wallet2post_ids[msg.sender].push(postsCount);
     postsCount ++;
     emit PostAdded(postsCount, _content);
   }
 
-  function awardPost (uint _id, uint _award) public {
+  function myPosts () public view returns (uint[] memory) {
+    return wallet2post_ids[msg.sender];
+  }
+
+  function crushBalance() public view returns (uint) {
+    return address(this).balance;
+  }
+
+  function awardPost (uint _id) public payable {
     // Need to specify post id and award amount
-    crushes_pool[_id].push(IOU(msg.sender, _award));
+    require(msg.value >= crush);
+    crushes_pool[_id].push(IOU(msg.sender, msg.value));
+    Post storage mypost = posts[_id];
+    mypost.award = mypost.award + msg.value;
     // Verify in truffle console: app = await CrushChain.deployed()
     // add = await app.awardPost(0, 15) then crushlist = await app.crushes_pool(0,0)
   }
+
 }
