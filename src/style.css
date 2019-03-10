@@ -109,7 +109,6 @@ button:focus {
   display: block;
   line-height: 18px;
   margin-left: 58px;
-  margin-top: 10px;
   color: #292f33;
 }
 .fa-reply:hover {
@@ -142,6 +141,7 @@ button:focus {
   font-size: 14px;
   margin-left: 58px;
   font-size: 14px;
+  min-height: 48px;
 }
 .tweetEntry-account-group {
   color: #8899a6;

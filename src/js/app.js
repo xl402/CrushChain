@@ -1,5 +1,6 @@
+
 // Store all the javascript code
-const list = document.querySelector('.tweetEntry-tweetHolder')
+const list = document.querySelector('.tweetEntry-tweetHolder');
 const myPost = document.querySelector('.formHolder');
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
@@ -91,6 +92,13 @@ App = {
     location.reload();
   },
 
+  claimReward: async(button) => {
+    const postId = button.getAttribute("data-id");
+    console.log(postId);
+    const claimPost = await App.CrushChain.claimPost(Number(postId));
+    location.reload();
+  },
+
   changeSort: async() => {
     document.getElementById("no-posts").style.display="none";
     App.sortByRecent = !App.sortByRecent;
@@ -104,14 +112,11 @@ App = {
       const order = posts[i].getAttribute("data-order");
       // convert this to a number
       const award = Number(posts[i].getAttribute("data-award"))/crush;
-      //sortMe.push([order, posts[i]])
-      //console.log(sortMe)
       sortMe.push(App.sortByRecent ? [award, posts[i]]:[order, posts[i]]);
     }
     sortMe.sort(function(x, y) {
       return x[0] - y[0];
     });
-    console.log(sortMe.length)
     for (var i=sortMe.length-1; i >= 0; i--) {
        container.appendChild(sortMe[i][1]);
     }
@@ -119,27 +124,31 @@ App = {
   },
 
   showMyPosts: async() => {
+    const wallet2post_ids = await App.CrushChain.myPosts()
+    const postIds=wallet2post_ids.map(id => id.toNumber());
     const posts = document.getElementsByClassName("tweetEntry");
     const length = posts.length;
     let postCount = 0;
     for (i=0; i<length; i++) {
-     const postOwner = posts[i].getAttribute("data-owner");
-     if (postOwner !=="MY POST OWNING ID") {
+     const postId = posts[i].getAttribute("data-id");
+     if (!postIds.includes(Number(postId))) {
      posts[i].style.display = "none";
      postCount++;
     }
   }
+  // If all posts not owned by user, display no posts message
   if (postCount == length) {
     document.getElementById("no-posts").style.display="inline-block";
   }
   },
 
+
   renderPosts: async() => {
     const wallet2post_ids = await App.CrushChain.myPosts()
-    // console.log(wallet2post_ids);
-    // for (var i=0; i<= wallet2post_ids.length -1; i++) {
-    //   console.log(wallet2post_ids[i].toNumber())
-    // }
+    const postIds=wallet2post_ids.map(id => id.toNumber());
+    const idsIcanSee = await App.CrushChain.idsIcanSee();
+    const addsIcanSee = await App.CrushChain.addsIcanSee();
+
       const postCount = await App.CrushChain.postsCount()
     for (var i = postCount-1; i >= 0; i--) {
       const post = await App.CrushChain.posts(i)
@@ -149,17 +158,27 @@ App = {
       const award = post[3]
       const claimed = post[4]
       const flags = post[5]
-      const likes = post[6]
 
       var temp = document.getElementById("post-template");
       postbox = temp.content.cloneNode(true);
 
-      // Assign post ID for adding rewards
+
+      // Hide action list, show claim button for own posts
+      item = postbox.querySelector(".tweetEntry-action-list");
+      item.style.display = postIds.includes(postId) || postId<3 ? "none" : "block";
+      item = postbox.querySelector(".claim");
+      item.style.display = postIds.includes(postId) ? (award > 0) ? "block" : "none" : "none";
+
+      // Assign post ID for adding/claiming rewards
       item = postbox.querySelector(".need-id1");
       item.setAttribute("data-id", postId);
       item = postbox.querySelector(".need-id2");
       item.setAttribute("data-id", postId);
       item = postbox.querySelector(".need-id3");
+      item.setAttribute("data-id", postId);
+      item = postbox.querySelector(".claim");
+      item.setAttribute("data-id", postId);
+      item = postbox.querySelector(".tweetEntry");
       item.setAttribute("data-id", postId);
 
       // Fill in text of post
@@ -180,7 +199,11 @@ App = {
 
       // Display current reward amount
       item = postbox.querySelector(".tweetEntry-reward");
-      item.textContent = award/crush+" ETH";
+      item.textContent = claimed ? 'Reward claimed' : award/crush+" ETH";
+      // Show addresses of reward-claimed posts
+      const numberIds = idsIcanSee.map(id => id.toNumber());
+      const index = numberIds.indexOf(postId);
+      item.textContent += index >= 0 ? ' by '+addsIcanSee[index] : ""
 
       // Fill avatar with some random cat image for lols
       item = postbox.getElementById("catImg");
@@ -209,44 +232,13 @@ function timestampToString(timestamp) {
 }
 
 
-
-list.addEventListener('click', function(e){
-  // Listener for like button
-  if (e.target.className == 'fa fa-heart') {
-    console.log('liked')
-  };
+const searchInput = document.querySelector('.postSearch');
+searchInput.addEventListener('input', function(e){
+const posts = document.getElementsByClassName("tweetEntry");
+    const length = posts.length;
+    for (i=0; i<length; i++) {
+     const postContent = posts[i].textContent.toLowerCase();
+     const searchTerm=this.value.toLowerCase();
+     posts[i].style.display = postContent.includes(searchTerm) ? "block" : "none";
+  }
 });
-
-/*
-myPost.addEventListener('click', function(e){
-  if (e.target.className == 'btn btn-primary') {
-    // Listen for the Post button being clicked
-    const content = e.target.parentElement.querySelector(".form-group textarea");
-    const post_message = content.value;
-    // Get post message
-    if (post_message != "") {
-      // Get current timestamp
-      var date = new Date();
-      var timestamp = date.getTime();
-      // Display in human readable form
-      var d = new Date(timestamp);
-      const time = d.getDate() + ' ' + monthNames[d.getMonth()]
-                   + ' at ' + d.getHours() + ':' + d.getMinutes();
-      // Create a new postbox and populate it with post message from earlier
-      var temp = document.getElementById("post-template");
-      postbox = temp.content.cloneNode(true);
-      item = postbox.querySelector(".tweetEntry-text-container");
-      item.textContent = post_message;
-      // Also fill its timestamp
-      item = postbox.querySelector(".tweetEntry-timestamp");
-      item.textContent = time;
-
-      item = postbox.getElementById("catImg");
-      item.src = "http://placekitten.com/50/50"
-
-      list.appendChild(postbox);
-      content.value = "";
-    }
-  };
-})
-*/
