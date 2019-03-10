@@ -37,7 +37,6 @@ button:focus {
   border-left: 0px solid #e1e8ed;
   border-right: 0px solid #e1e8ed;
   border-top: 0px solid #e1e8ed;
-  width: 688px;
   margin: auto;
 }
 
@@ -92,16 +91,29 @@ button:focus {
   margin: 0 auto;
 }
 
+.form-control:focus {
+  outline: none;
+}
+
 .post-button {
   background-color: #e1e8ed;
-  border: 0.5px solid #e1e8ed;
+  border: 0.5px solid #c0c5c9;
   border-radius: 0.5rem;
+  padding: 5px 17px;
 }
 
 .post-button:hover {
   background-color: grey;
-  border: 1px solid grey;
+  border: 0.5px solid grey;
   border-radius: 0.5rem;
+}
+
+.postSearch {
+  border-radius: 0.5rem;
+  border: 1px solid #e1e8ed;
+}
+.postSearch:focus {
+  outline: none;
 }
 
 /* The action list is optional. */
@@ -111,9 +123,6 @@ button:focus {
   margin-left: 58px;
   color: #292f33;
 }
-.fa-reply:hover {
-  color: #292f33;
-}
 .fa-flag:hover {
   color: #292f33;
 }
@@ -121,21 +130,39 @@ button:focus {
   color: #ff3333;
 }
 /************************/
-.fa-heart:hover .dropdown-content {display: block;}
+.fa-heart:hover .dropdown-content {display:inline-block;}
 .dropdown-content {
   display: none;
   position: absolute;
   background-color: white;
   min-width: 160px;
-  z-index: 1;
+  z-index: 1;  
+  font-family: Arial,sans-serif;
+}
+
+a[href^="#"] {
+  margin-left: 5px;
+  background-color: #e1e8ed;
+  border: 0.5px solid #e1e8ed;
+  border-radius: 0.5rem;
+  width: 150px;
+  padding: 2px 3px;
+  color: black;
+}
+
+a[href^="#"]:hover {
+  text-decoration: none;
+  background-color: #fbd8ff;
+  border: 0.5px solid #fbd8ff;
+  color: black;
 }
 
 .tweetEntry {
   border-bottom: 1px solid #e1e8ed;
-  cursor: pointer;
   min-height: 51px;
   padding: 9px 12px;
 }
+
 .tweetEntry-content {
   display: block;
   font-size: 14px;
@@ -172,6 +199,9 @@ button:focus {
   font-size: 14px;
   color: #b1bbc3;
   padding: 0px;
+}
+.tweetEntry-reward {
+  color: grey;
 }
 .tweetEntry-text-container {
   font-size: 14px;

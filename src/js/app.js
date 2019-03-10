@@ -1,4 +1,3 @@
-
 // Store all the javascript code
 const list = document.querySelector('.tweetEntry-tweetHolder');
 const myPost = document.querySelector('.formHolder');
@@ -102,7 +101,7 @@ App = {
   changeSort: async() => {
     document.getElementById("no-posts").style.display="none";
     App.sortByRecent = !App.sortByRecent;
-    const container = document.getElementById("post-container");
+    const container = document.getElementById("post-container"); 
     const posts = document.getElementsByClassName("tweetEntry");
 
     const length = posts.length;
@@ -163,9 +162,9 @@ App = {
       postbox = temp.content.cloneNode(true);
 
 
-      // Hide action list, show claim button for own posts
+      // Hide action list for own/first 3/claimed posts, show claim button for own posts;
       item = postbox.querySelector(".tweetEntry-action-list");
-      item.style.display = postIds.includes(postId) || postId<3 ? "none" : "block";
+      item.style.display = postIds.includes(postId) || postId<3  || claimed ? "none" : "block";
       item = postbox.querySelector(".claim");
       item.style.display = postIds.includes(postId) ? (award > 0) ? "block" : "none" : "none";
 
@@ -199,7 +198,7 @@ App = {
 
       // Display current reward amount
       item = postbox.querySelector(".tweetEntry-reward");
-      item.textContent = claimed ? 'Reward claimed' : award/crush+" ETH";
+      item.textContent = claimed ? ' Reward claimed' : ' Current reward: '+award/crush+" ETH";
       // Show addresses of reward-claimed posts
       const numberIds = idsIcanSee.map(id => id.toNumber());
       const index = numberIds.indexOf(postId);

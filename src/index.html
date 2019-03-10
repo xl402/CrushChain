@@ -12,12 +12,15 @@
   </head>
 
   <body>
-  <div style="margin: 0 auto; width: 688px">
-    <div class = "generalHolder">
-      <h1 class="page-header"><h1>CrushChain <img src="https://i.imgur.com/51tGMGh.png"width="60" height="55"> </h1>
-      <h3 id="welcome-message">Welcome!</h3>
-      <hr>
+    <div class = "generalHolder" >
+      <div style="width: 688px; margin:auto;">
+      <h1>CrushChain <img src="https://i.imgur.com/51tGMGh.png"width="60" height="55"> </h1>
+      <h3 id="welcome-message" style="font-style:italic; font-size: 14px; color:grey; margin-top: 10px">Welcome!</h3>
     </div>
+      <hr>
+  </div>
+  <div style="margin: 0 auto; width: 688px">
+    
 
 
 <div class = "formHolder">
@@ -39,17 +42,16 @@
   <template id="post-template">
     <div class="tweetEntry" data-order="" data-award="" data-id="">
       <div class="tweetEntry-content">
-        <a class="tweetEntry-account-group" href="[accountURL]">
+        <span class="tweetEntry-account-group">
           <img class="tweetEntry-avatar" src="http://placekitten.com/150/150" id="catImg">
           <span class="tweetEntry-timestamp">[timestamp]</span>
           <span class="tweetEntry-reward">[reward]</span>
-        </a>
+        </span>
         <div class="tweetEntry-text-container">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quam ipsum, finibus ac est sed, vestibulum condimentum neque. Sed eget iaculis.
         </div>
       </div>
       <div class="tweetEntry-action-list" style="line-height:24px;color: #b1bbc3;">
-        <i class="fa fa-reply" style="width: 80px;"></i>
         <i class="fa fa-heart" style="width: 80px">
           <div class="dropdown-content">
             <a href="#" class="need-id1" data-id="" onclick="App.addReward(1, this)">Reward 1 ETH</a>
