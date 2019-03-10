@@ -202,16 +202,16 @@ App = {
       // Display current reward amount
       item = postbox.querySelector(".tweetEntry-reward");
       item.textContent = claimed ? ' Reward claimed' : ' Current reward: '+award/crush+" ETH";
+      // Show addresses of reward-claimed posts
+      const numberIds = idsIcanSee.map(id => id.toNumber());
+      const index = numberIds.indexOf(postId);
+      item.textContent += index >= 0 ? ' by '+addsIcanSee[index] : ""
+
 
       // Hide conversion for claimed posts
       // Display current reward amount
       item = postbox.querySelector(".converted-value");
       item.style.display = claimed ? 'none' : 'auto';
-
-      // Show addresses of reward-claimed posts
-      const numberIds = idsIcanSee.map(id => id.toNumber());
-      const index = numberIds.indexOf(postId);
-      item.textContent += index >= 0 ? ' by '+addsIcanSee[index] : ""
 
       // Fill avatar with some random cat image for lols
       item = postbox.getElementById("catImg");
