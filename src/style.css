@@ -7,6 +7,7 @@
 body {
   font-family: Arial,sans-serif;
   color: #292f33;
+  margin-bottom: 100px;
 }
 
 button {
@@ -30,6 +31,7 @@ button:focus {
   border-top: 1px solid #e1e8ed;
   width: 688px;
   margin: 10px 0px auto;
+  margin-bottom: 30px;
   border-radius: 5px;
 }
 
@@ -223,8 +225,8 @@ a[href^="#"]:hover {
   background-color: #fbd8ff;
   height: 30px;
   margin-top: 20px;
-}
-.footer {
-  background-color: #CE9AD3;
-  height: 70px;
+  bottom: 100px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
 }

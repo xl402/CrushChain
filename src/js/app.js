@@ -101,7 +101,7 @@ App = {
   changeSort: async() => {
     document.getElementById("no-posts").style.display="none";
     App.sortByRecent = !App.sortByRecent;
-    const container = document.getElementById("post-container"); 
+    const container = document.getElementById("post-container");
     const posts = document.getElementsByClassName("tweetEntry");
 
     const length = posts.length;
@@ -148,6 +148,7 @@ App = {
     const idsIcanSee = await App.CrushChain.idsIcanSee();
     const addsIcanSee = await App.CrushChain.addsIcanSee();
 
+
       const postCount = await App.CrushChain.postsCount()
     for (var i = postCount-1; i >= 0; i--) {
       const post = await App.CrushChain.posts(i)
@@ -191,6 +192,8 @@ App = {
       // Assign award amount
       item = postbox.querySelector(".tweetEntry");
       item.setAttribute("data-award", award.toNumber());
+      item = postbox.querySelector(".converted-value");
+      item.setAttribute("data-award", award.toNumber());
 
       // Also fill its timestamp
       item = postbox.querySelector(".tweetEntry-timestamp");
@@ -199,6 +202,12 @@ App = {
       // Display current reward amount
       item = postbox.querySelector(".tweetEntry-reward");
       item.textContent = claimed ? ' Reward claimed' : ' Current reward: '+award/crush+" ETH";
+
+      // Hide conversion for claimed posts
+      // Display current reward amount
+      item = postbox.querySelector(".converted-value");
+      item.style.display = claimed ? 'none' : 'auto';
+
       // Show addresses of reward-claimed posts
       const numberIds = idsIcanSee.map(id => id.toNumber());
       const index = numberIds.indexOf(postId);
@@ -211,6 +220,8 @@ App = {
 
       list.appendChild(postbox);
     }
+    convertToBitcoin();
+    convertToEuro();
   },
 
 }
@@ -229,6 +240,49 @@ function timestampToString(timestamp) {
                (d.getMinutes()<10?'0':'') + d.getMinutes();
   return time;
 }
+
+function convertToBitcoin() {
+  const gimmeData = new XMLHttpRequest();
+  gimmeData.open('GET', "https://cors-anywhere.herokuapp.com/https://api.mybitx.com/api/1/ticker?pair=ETHXBT", true);
+  gimmeData.send();
+  gimmeData.addEventListener("readystatechange", processRequest, false);
+  function processRequest(e) {
+    if (gimmeData.readyState == 4 && gimmeData.status == 200) {
+      const response = JSON.parse(gimmeData.responseText);
+      const XBTtoEUR = response.ask;
+      const posts = document.getElementsByClassName("converted-value");
+      const length = posts.length;
+      for (i=0; i<length; i++) {
+        const reward = posts[i].getAttribute("data-award");
+        const convertedReward=reward*XBTtoEUR/crush;
+        posts[i].setAttribute("data-award", convertedReward);
+      }
+    }
+  }
+  }
+
+function convertToEuro() {
+const gimmeData = new XMLHttpRequest();
+gimmeData.open('GET', "https://cors-anywhere.herokuapp.com/https://api.mybitx.com/api/1/ticker?pair=XBTEUR", true);
+gimmeData.send();
+gimmeData.addEventListener("readystatechange", processRequest, false);
+function processRequest(e) {
+  if (gimmeData.readyState == 4 && gimmeData.status == 200) {
+    const response = JSON.parse(gimmeData.responseText);
+    const XBTtoEUR = response.ask;
+    const posts = document.getElementsByClassName("converted-value");
+    const length = posts.length;
+    for (i=0; i<length; i++) {
+      console.log(i);
+      console.log(posts[i].textContent);
+      const reward = posts[i].getAttribute("data-award");
+      console.log(reward);
+      posts[i].textContent = '(~'+reward*XBTtoEUR/crush+' EUR)';
+    }
+  }
+}
+}
+
 
 
 const searchInput = document.querySelector('.postSearch');
