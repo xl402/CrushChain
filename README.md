@@ -1,6 +1,6 @@
 # CrushChain
 ## Winner of Best Tech Award AND Craft Beer Coin Award for CBHACK 2019
-https://cbhack.devpost.com/submissions?ref_content=winner_announcement_email&ref_feature=engagement&ref_medium=email&utm_campaign=winner_announcement_email&utm_medium=email&utm_source=winner_announcement_email?
+https://cbhack.devpost.com/submissions
 ### Created by *Team CrushChain*
 #### Participants: *Ellen Skipper, Emma Andrews, Rory Xiao, Adian Liusie, Tom Lu*
 ## Project Overview:
